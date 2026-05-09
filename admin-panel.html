@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8"><h1 class="text-4xl font-bold gradient-text">Admin Dashboard</h1><button id="logoutBtn" class="bg-red-500 text-white px-5 py-2 rounded-full shadow hover:shadow-lg transition"><i class="fas fa-sign-out-alt mr-2"></i> Logout</button></div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-clock mr-2"></i> Pending Registrations</h2><div id="pendingList" class="space-y-4"></div></div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-link mr-2"></i> Manage Social Links</h2><div class="grid md:grid-cols-2 gap-4"><div><label>Discord URL</label><input type="url" id="discordAdmin" class="form-input"></div><div><label>Instagram URL</label><input type="url" id="instagramAdmin" class="form-input"></div><div><label>Broadcast URL</label><input type="url" id="broadcastAdmin" class="form-input"></div><div><label>Second Channel URL</label><input type="url" id="secondChannelAdmin" class="form-input"></div></div><button id="saveSocialBtn" class="btn-primary mt-4"><i class="fas fa-save mr-2"></i> Save</button></div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-video mr-2"></i> Manage Videos</h2><div id="videosAdminList" class="space-y-4 mb-6"></div><button id="addVideoBtn" class="bg-green-500 text-white px-5 py-2 rounded-full"><i class="fas fa-plus mr-2"></i> Add Video</button></div>
+        <div class="bg-white rounded-2xl shadow-xl p-6"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-users mr-2"></i> Guild Members</h2><div id="adminMemberList" class="space-y-2"></div></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

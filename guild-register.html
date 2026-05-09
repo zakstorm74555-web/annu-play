@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guild Register | Annu Play</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2"><div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-400 to-pink-600 flex items-center justify-center"><span class="text-white font-bold text-xl">A</span></div><h1 class="text-2xl font-bold gradient-text">Annu Play</h1></div>
+            <nav class="hidden md:flex space-x-8"><a href="index.html" class="hover:text-pink-500">Home</a><a href="guild-register.html" class="text-pink-500">Guild Register</a><a href="admin-login.html" class="hover:text-pink-500">Admin</a></nav>
+        </div>
+    </header>
+    <div class="container mx-auto px-4 py-12 max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition hover:scale-[1.01]">
+            <h2 class="text-3xl font-bold text-center gradient-text mb-6">Guild Registration</h2>
+            <form id="registerForm" class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" id="name" placeholder="Full Name *" class="form-input" required>
+                    <input type="email" id="email" placeholder="Email Address *" class="form-input" required>
+                    <input type="text" id="ign" placeholder="FreeFire IGN *" class="form-input" required>
+                    <select id="rank" class="form-input">
+                        <option>Bronze</option><option>Silver</option><option>Gold</option><option>Platinum</option><option>Heroic</option><option>Grandmaster</option>
+                    </select>
+                </div>
+                <div><label class="block font-semibold mb-1">Profile Picture (image, max 2MB)</label><input type="file" id="profilePic" accept="image/*" class="form-input"></div>
+                <div><label class="block font-semibold mb-1">Gameplay Video (MP4, max 10MB)</label><input type="file" id="videoFile" accept="video/mp4" class="form-input"></div>
+                <div><textarea id="message" rows="3" placeholder="Why do you want to join?" class="form-input"></textarea></div>
+                <button type="submit" class="btn-primary w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Registration</button>
+            </form>
+            <div id="formMsg" class="mt-4 text-center font-semibold"></div>
+        </div>
+        <div class="mt-10 bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto">
+            <h3 class="text-xl font-bold text-center gradient-text">Check Status</h3>
+            <input type="email" id="checkEmail" placeholder="Your email" class="form-input mt-3">
+            <button id="checkStatusBtn" class="btn-primary w-full mt-3"><i class="fas fa-search mr-2"></i> Check Status</button>
+            <div id="statusResult" class="mt-3 text-center"></div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

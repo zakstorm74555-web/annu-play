@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+        <h2 class="text-3xl font-bold text-center gradient-text mb-6">Admin Login</h2>
+        <form id="loginForm">
+            <div class="mb-4"><input type="text" id="username" placeholder="Username" class="form-input" required></div>
+            <div class="mb-6"><input type="password" id="password" placeholder="Password" class="form-input" required></div>
+            <button type="submit" class="btn-primary w-full">Login</button>
+        </form>
+        <div id="loginMsg" class="mt-4 text-center text-red-500 text-sm"></div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if(document.getElementById('username').value === 'admin' && document.getElementById('password').value === 'admin123') {
+                localStorage.setItem('adminLoggedIn', 'true');
+                window.location.href = 'admin-panel.html';
+            } else document.getElementById('loginMsg').innerText = 'Invalid';
+        });
+    </script>
+</body>
+</html>
