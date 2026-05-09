@@ -54,7 +54,7 @@ function loadSocialLinks() {
 
     onValue(ref(db, 'socialLinks'), (snapshot) => {
         const s = snapshot.val() || {};
-        const secondChannelImage = 'https://img.sanishtech.com/u/d1da5d219b135feb7d97e8f6aca6f66b.jpg';
+        const secondChannelImage = 'https://yt3.googleusercontent.com/tDi1pAF8FZGIF8e2K1rx8JTKrpA16mEhIbT1NkUaPWeE0ZuNfbXIISUBHplqEeIlY2XNZJiV2Q=s176-c-k-c0x00ffffff-no-rj-mo';
 
         container.innerHTML = `
             <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-center text-white shadow-xl hover:scale-105 transition">
