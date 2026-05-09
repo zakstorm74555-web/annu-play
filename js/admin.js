@@ -25,6 +25,16 @@ const ALLOWED_EMAILS = [
     "cobracg6@gmail.com"
 ];
 
+// --- HELPER: GET YOUTUBE THUMBNAIL ---
+function getYoutubeThumb(url) {
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+        return `https://img.youtube.com/vi/${match[2]}/mqdefault.jpg`;
+    }
+    return 'icon.png'; // Default icon if URL is invalid
+}
+
 // --- AUTHENTICATION LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('googleLoginBtn');
@@ -85,7 +95,7 @@ function initAdminPanel() {
     }
 }
 
-// --- GLOBAL FUNCTIONS (Attached to window for HTML buttons) ---
+// --- GLOBAL FUNCTIONS ---
 
 window.processReq = async (id, status) => {
     const r = await get(ref(db, `registrations/${id}`));
@@ -106,7 +116,13 @@ window.processReq = async (id, status) => {
 window.syncVid = (id) => {
     const title = document.getElementById(`t_${id}`).value;
     const url = document.getElementById(`u_${id}`).value;
-    update(ref(db, `videos/${id}`), { title, url }).then(() => alert("Video Updated!"));
+    const thumb = getYoutubeThumb(url); // Automatically fetch thumbnail from URL
+
+    update(ref(db, `videos/${id}`), { 
+        title, 
+        url, 
+        thumb: thumb 
+    }).then(() => alert("Video & Thumbnail Updated!"));
 };
 
 window.delVid = (id) => {
@@ -176,7 +192,7 @@ function loadVideosAdmin() {
                 <img src="${v.thumb || 'icon.png'}" class="w-20 h-12 object-cover rounded">
                 <div class="flex-1">
                     <input type="text" id="t_${id}" value="${v.title}" class="w-full mb-1 border rounded px-2 py-1 text-sm">
-                    <input type="text" id="u_${id}" value="${v.url}" class="w-full border rounded px-2 py-1 text-xs">
+                    <input type="text" id="u_${id}" value="${v.url}" placeholder="YouTube Link Paste Karein" class="w-full border rounded px-2 py-1 text-xs">
                 </div>
                 <div class="flex gap-2">
                     <button onclick="syncVid('${id}')" class="text-blue-500 p-2"><i class="fas fa-save"></i></button>
