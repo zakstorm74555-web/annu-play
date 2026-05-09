@@ -3,44 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guild Register | Annu Play</title>
+    
+    <!-- PRIMARY SEO TAGS -->
+    <title>Guild Registration | Join Annu Play FreeFire Team</title>
+    <meta name="title" content="Guild Registration | Join Annu Play FreeFire Team">
+    <meta name="description" content="Apply now to join the official Annu Play FreeFire Guild. Submit your IGN, rank, and gameplay video to become part of our elite gaming community.">
+    <meta name="keywords" content="Annu Play Guild, FreeFire Guild Join, Annu Play Team Register, FreeFire Pro Guild, Annu Play Gaming Community">
+    <meta name="author" content="Annu Play">
+
+    <!-- FAVICON & LOGO (As per your provided URL) -->
+    <link rel="icon" type="image/jpeg" href="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" />
+    <link rel="apple-touch-icon" href="icon.png"> <!-- Backup icon.png from saved info -->
+
+    <!-- OPEN GRAPH (Social Media Preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/guild-register.html">
+    <meta property="og:title" content="Join Annu Play FreeFire Guild - Register Now!">
+    <meta property="og:description" content="Showcase your FreeFire skills and join Annu Play's official guild. Fill the registration form now.">
+    <meta property="og:image" content="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj">
+
+    <!-- TWITTER SEO -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Annu Play Guild Recruitment">
+    <meta property="twitter:image" content="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj">
+
+    <!-- Tailwind & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .gradient-text { background: linear-gradient(to right, #ec4899, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .form-input { width: 100%; border: 1px solid #f9a8d4; border-radius: 0.75rem; padding: 0.75rem 1rem; outline: none; transition: 0.2s; }
+        .form-input:focus { border-color: #db2777; box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.1); }
+        .btn-primary { background: linear-gradient(to right, #ec4899, #db2777); color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: 0.3s; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    </style>
 </head>
 <body class="bg-gradient-to-br from-pink-50 to-purple-50">
+    
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2"><div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-400 to-pink-600 flex items-center justify-center"><span class="text-white font-bold text-xl">A</span></div><h1 class="text-2xl font-bold gradient-text">Annu Play</h1></div>
-            <nav class="hidden md:flex space-x-8"><a href="index.html" class="hover:text-pink-500">Home</a><a href="guild-register.html" class="text-pink-500">Guild Register</a><a href="admin-login.html" class="hover:text-pink-500">Admin</a></nav>
+            <div class="flex items-center space-x-2">
+                <!-- Logo Integrated in Header -->
+                <img src="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" alt="Annu Play Logo" class="w-10 h-10 rounded-full border-2 border-pink-500">
+                <h1 class="text-2xl font-bold gradient-text">Annu Play</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="font-medium hover:text-pink-500">Home</a>
+                <a href="guild-register.html" class="font-medium text-pink-500 border-b-2 border-pink-500">Guild Register</a>
+                <a href="admin-login.html" class="font-medium hover:text-pink-500">Admin</a>
+            </nav>
         </div>
     </header>
+
     <div class="container mx-auto px-4 py-12 max-w-3xl">
+        <!-- Main Form Section -->
         <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition hover:scale-[1.01]">
-            <h2 class="text-3xl font-bold text-center gradient-text mb-6">Guild Registration</h2>
+            <h2 class="text-3xl font-bold text-center gradient-text mb-2">Guild Registration</h2>
+            <p class="text-center text-gray-500 mb-8 font-medium">Join the elite Annu Play FreeFire family</p>
+            
             <form id="registerForm" class="space-y-4">
                 <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" id="name" placeholder="Full Name *" class="form-input" required>
-                    <input type="email" id="email" placeholder="Email Address *" class="form-input" required>
-                    <input type="text" id="ign" placeholder="FreeFire IGN *" class="form-input" required>
-                    <select id="rank" class="form-input">
-                        <option>Bronze</option><option>Silver</option><option>Gold</option><option>Platinum</option><option>Heroic</option><option>Grandmaster</option>
+                    <input type="text" id="name" name="full_name" placeholder="Full Name *" class="form-input" required aria-label="Full Name">
+                    <input type="email" id="email" name="email" placeholder="Email Address *" class="form-input" required aria-label="Email">
+                    <input type="text" id="ign" name="ign" placeholder="FreeFire IGN *" class="form-input" required aria-label="FreeFire IGN">
+                    <select id="rank" name="rank" class="form-input" aria-label="Current Rank">
+                        <option value="" disabled selected>Select Your Rank</option>
+                        <option>Bronze</option>
+                        <option>Silver</option>
+                        <option>Gold</option>
+                        <option>Platinum</option>
+                        <option>Heroic</option>
+                        <option>Grandmaster</option>
                     </select>
                 </div>
-                <div><label class="block font-semibold mb-1">Profile Picture (image, max 2MB)</label><input type="file" id="profilePic" accept="image/*" class="form-input"></div>
-                <div><label class="block font-semibold mb-1">Gameplay Video (MP4, max 10MB)</label><input type="file" id="videoFile" accept="video/mp4" class="form-input"></div>
-                <div><textarea id="message" rows="3" placeholder="Why do you want to join?" class="form-input"></textarea></div>
-                <button type="submit" class="btn-primary w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Registration</button>
+                <div>
+                    <label class="block font-semibold mb-1 text-gray-700">Profile Picture (image, max 2MB)</label>
+                    <input type="file" id="profilePic" accept="image/*" class="form-input">
+                </div>
+                <div>
+                    <label class="block font-semibold mb-1 text-gray-700">Gameplay Video (MP4, max 10MB)</label>
+                    <input type="file" id="videoFile" accept="video/mp4" class="form-input">
+                </div>
+                <div>
+                    <textarea id="message" name="reason" rows="3" placeholder="Why do you want to join Annu Play Guild?" class="form-input"></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full shadow-lg">
+                    <i class="fas fa-paper-plane mr-2"></i> Submit Registration
+                </button>
             </form>
             <div id="formMsg" class="mt-4 text-center font-semibold"></div>
         </div>
-        <div class="mt-10 bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto">
-            <h3 class="text-xl font-bold text-center gradient-text">Check Status</h3>
-            <input type="email" id="checkEmail" placeholder="Your email" class="form-input mt-3">
-            <button id="checkStatusBtn" class="btn-primary w-full mt-3"><i class="fas fa-search mr-2"></i> Check Status</button>
-            <div id="statusResult" class="mt-3 text-center"></div>
+
+        <!-- Status Check Section (Important for returning users) -->
+        <div class="mt-10 bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto border-t-4 border-pink-400">
+            <h3 class="text-xl font-bold text-center gradient-text">Check Application Status</h3>
+            <p class="text-xs text-center text-gray-400 mb-4">Enter email used during registration</p>
+            <input type="email" id="checkEmail" placeholder="Your registered email" class="form-input mt-1">
+            <button id="checkStatusBtn" class="btn-primary w-full mt-3 flex items-center justify-center">
+                <i class="fas fa-search mr-2"></i> Check Status
+            </button>
+            <div id="statusResult" class="mt-3 text-center text-sm font-bold"></div>
         </div>
     </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
