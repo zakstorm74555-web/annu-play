@@ -3,20 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Admin Dashboard | Annu Play</title>
+    <link rel="icon" type="image/png" href="icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .gradient-text { background: linear-gradient(to right, #ec4899, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .form-input-admin { width: 100%; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.6rem 1rem; outline: none; margin-top: 0.25rem; transition: 0.2s; }
+        .form-input-admin:focus { border-color: #db2777; ring: 2px ring-pink-200; }
+        .btn-primary-admin { background: linear-gradient(to right, #ec4899, #db2777); color: white; padding: 0.6rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: 0.3s; }
+        .btn-primary-admin:hover { opacity: 0.9; }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <div class="flex justify-between items-center mb-8"><h1 class="text-4xl font-bold gradient-text">Admin Dashboard</h1><button id="logoutBtn" class="bg-red-500 text-white px-5 py-2 rounded-full shadow hover:shadow-lg transition"><i class="fas fa-sign-out-alt mr-2"></i> Logout</button></div>
-        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-clock mr-2"></i> Pending Registrations</h2><div id="pendingList" class="space-y-4"></div></div>
-        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-link mr-2"></i> Manage Social Links</h2><div class="grid md:grid-cols-2 gap-4"><div><label>Discord URL</label><input type="url" id="discordAdmin" class="form-input"></div><div><label>Instagram URL</label><input type="url" id="instagramAdmin" class="form-input"></div><div><label>Broadcast URL</label><input type="url" id="broadcastAdmin" class="form-input"></div><div><label>Second Channel URL</label><input type="url" id="secondChannelAdmin" class="form-input"></div></div><button id="saveSocialBtn" class="btn-primary mt-4"><i class="fas fa-save mr-2"></i> Save</button></div>
-        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-video mr-2"></i> Manage Videos</h2><div id="videosAdminList" class="space-y-4 mb-6"></div><button id="addVideoBtn" class="bg-green-500 text-white px-5 py-2 rounded-full"><i class="fas fa-plus mr-2"></i> Add Video</button></div>
-        <div class="bg-white rounded-2xl shadow-xl p-6"><h2 class="text-2xl font-bold text-pink-600 mb-4"><i class="fas fa-users mr-2"></i> Guild Members</h2><div id="adminMemberList" class="space-y-2"></div></div>
+<body class="bg-gray-50 min-h-screen">
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3">
+                <img src="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" class="w-12 h-12 rounded-full border-2 border-pink-500">
+                <h1 class="text-3xl font-extrabold gradient-text">Master Dashboard</h1>
+            </div>
+            <button id="logoutBtn" class="bg-red-50 text-red-600 px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-red-600 hover:text-white transition-all duration-300">
+                <i class="fas fa-power-off"></i> Logout System
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Pending & Members -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Pending Section -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-pink-50 px-6 py-4 border-b border-pink-100 flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-pink-700 flex items-center gap-2">
+                            <i class="fas fa-clock"></i> Pending Pilots
+                        </h2>
+                        <span class="bg-pink-200 text-pink-800 text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Realtime</span>
+                    </div>
+                    <div id="pendingList" class="p-6 space-y-4 min-h-[200px]">
+                        <!-- Content via admin.js -->
+                        <p class="text-center text-gray-400 mt-10">Scanning transmissions...</p>
+                    </div>
+                </div>
+
+                <!-- Videos Management -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-700 flex items-center gap-2">
+                            <i class="fas fa-play-circle"></i> Video Feed
+                        </h2>
+                        <button id="addVideoBtn" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-1.5 rounded-lg font-bold transition">
+                            <i class="fas fa-plus mr-1"></i> Add New
+                        </button>
+                    </div>
+                    <div id="videosAdminList" class="p-6 space-y-4">
+                        <!-- Content via admin.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Socials & Stats -->
+            <div class="space-y-8">
+                
+                <!-- Social Links -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+                        <h2 class="text-xl font-bold text-blue-700 flex items-center gap-2">
+                            <i class="fas fa-share-alt"></i> Social Sync
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="text-xs font-black text-gray-400 uppercase">Discord Server</label>
+                            <input type="url" id="discordAdmin" placeholder="https://discord.gg/..." class="form-input-admin">
+                        </div>
+                        <div>
+                            <label class="text-xs font-black text-gray-400 uppercase">Instagram</label>
+                            <input type="url" id="instagramAdmin" placeholder="https://instagram.com/..." class="form-input-admin">
+                        </div>
+                        <div>
+                            <label class="text-xs font-black text-gray-400 uppercase">Broadcast Channel</label>
+                            <input type="url" id="broadcastAdmin" placeholder="WhatsApp Link" class="form-input-admin">
+                        </div>
+                        <div>
+                            <label class="text-xs font-black text-gray-400 uppercase">Second Channel</label>
+                            <input type="url" id="secondChannelAdmin" placeholder="Youtube Link" class="form-input-admin">
+                        </div>
+                        <button id="saveSocialBtn" class="btn-primary-admin w-full mt-2 shadow-lg shadow-pink-200">
+                            <i class="fas fa-cloud-upload-alt mr-2"></i> Sync Socials
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guild Members -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-purple-50 px-6 py-4 border-b border-purple-100">
+                        <h2 class="text-xl font-bold text-purple-700 flex items-center gap-2">
+                            <i class="fas fa-id-badge"></i> Active Roster
+                        </h2>
+                    </div>
+                    <div id="adminMemberList" class="p-6 space-y-3 max-h-[400px] overflow-y-auto">
+                        <!-- Content via admin.js -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    <!-- EmailJS & Master Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="js/admin.js"></script>
+    <script type="module" src="js/admin.js"></script>
 </body>
 </html>
