@@ -19,10 +19,10 @@ const db = getDatabase(app);
 // ===== UTILITY =====
 function escapeHtml(str) {
     if (!str) return '';
-    return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    return str.replace(/[&<>]/g, m => ({'&':'&','<':'<','>':'>'}[m]));
 }
 
-// ===== HOME PAGE: Realtime Videos =====
+// ===== HOME PAGE: Realtime Videos (Updated to receive Thumbnail) =====
 function loadVideos() {
     const container = document.getElementById('videosContainer');
     if (!container) return;
@@ -34,13 +34,20 @@ function loadVideos() {
             return;
         }
 
+        // Convert object to array and sort by latest
         const vList = Object.values(data).sort((a, b) => b.timestamp - a.timestamp).slice(0, 3);
+        
         container.innerHTML = vList.map(v => `
             <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
-                <img src="${v.thumb}" class="w-full h-48 object-cover">
+                <div class="relative h-48 w-full bg-gray-200">
+                    <img src="${v.thumb || 'icon.png'}" 
+                         alt="${escapeHtml(v.title)}" 
+                         class="w-full h-full object-cover"
+                         onerror="this.src='icon.png'">
+                </div>
                 <div class="p-5">
-                    <h3 class="text-xl font-bold">${escapeHtml(v.title)}</h3>
-                    <a href="${v.url}" target="_blank" class="text-pink-500 mt-2 inline-block font-semibold">Watch on YouTube →</a>
+                    <h3 class="text-xl font-bold line-clamp-2">${escapeHtml(v.title)}</h3>
+                    <a href="${v.url}" target="_blank" class="text-pink-500 mt-2 inline-block font-semibold hover:underline">Watch on YouTube →</a>
                 </div>
             </div>
         `).join('');
