@@ -1,209 +1,208 @@
-// ===== ADMIN PANEL GUARD =====
-if (!localStorage.getItem('adminLoggedIn')) {
-    window.location.href = 'admin-login.html';
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, onValue, update, remove, set, get, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.app";
 
-// ===== REPLACE WITH YOUR EMAILJS KEYS (optional) =====
-const EMAILJS_USER_ID = "Cx_0hU_rlhb3mvDT0";
-const EMAILJS_SERVICE_ID = "service_xdgfif6";
-const EMAILJS_TEMPLATE_ID = "template_xkcqd68";
-emailjs.init(EMAILJS_USER_ID);
+// --- CONFIGURATION ---
+const firebaseConfig = {
+    apiKey: "AIzaSyDpMMvExzeM1b4pGz2nTUnXkZza2sXtVyI",
+    authDomain: "annu-guild-test.firebaseapp.com",
+    databaseURL: "https://annu-guild-test-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "annu-guild-test",
+    storageBucket: "annu-guild-test.firebasestorage.app",
+    messagingSenderId: "259073812655",
+    appId: "1:259073812655:web:691105e24a8cee51a34c5a"
+};
 
-async function sendEmail(to_email, to_name, status) {
-    const social = JSON.parse(localStorage.getItem('socialLinks')) || {};
-    const params = {
-        to_name,
-        to_email,
-        status: status === 'approved' ? 'APPROVED ✅' : 'REJECTED ❌',
-        message: status === 'approved' ? 'Welcome to the guild! Join Discord.' : 'Sorry, not accepted.',
-        discord_link: social.discord || ''
-    };
-    try {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
-    } catch (e) {
-        console.log('Email error:', e);
-    }
-}
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const provider = new GoogleAuthProvider();
 
-function loadPending() {
-    const regs = JSON.parse(localStorage.getItem('registrations')) || [];
-    const pending = regs.filter(r => r.status === 'pending');
-    const container = document.getElementById('pendingList');
-    if (pending.length === 0) {
-        container.innerHTML = '<div class="text-center text-gray-500 py-6">No pending registrations</div>';
-        return;
-    }
-    container.innerHTML = pending.map(req => `
-        <div class="border rounded-xl p-4 bg-white shadow-md">
-            <div class="flex flex-wrap gap-4 items-start">
-                ${req.profilePic ? `<img src="${req.profilePic}" class="w-16 h-16 rounded-full object-cover">` : '<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center"><i class="fas fa-user text-gray-500 text-2xl"></i></div>'}
-                <div class="flex-1">
-                    <strong>${escapeHtml(req.name)}</strong> (${escapeHtml(req.email)})<br>
-                    IGN: ${escapeHtml(req.ign)} | Rank: ${escapeHtml(req.rank)}<br>
-                    ${req.video ? `<video controls class="max-h-32 max-w-xs mt-2 rounded-lg"><source src="${req.video}" type="video/mp4"></video>` : '<span class="text-gray-500">No video</span>'}<br>
-                    <span class="text-gray-600">${escapeHtml(req.message || '')}</span><br>
-                    <span class="text-xs text-gray-400">${new Date(req.submittedAt).toLocaleString()}</span>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="updateRequest(${req.id}, 'approved')" class="bg-green-500 text-white px-2 py-1 text-sm rounded-full hover:bg-green-600"><i class="fas fa-check mr-1"></i> Accept</button>
-                    <button onclick="updateRequest(${req.id}, 'rejected')" class="bg-red-500 text-white px-2 py-1 text-sm rounded-full hover:bg-red-600"><i class="fas fa-times mr-1"></i> Reject</button>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
+// WHITELISTED ADMINS
+const ALLOWED_EMAILS = [
+    "bilalmohsin650@gmail.com",
+    "annuplaybusiness@gmail.com",
+    "cobracg6@gmail.com"
+];
 
-window.updateRequest = async function(id, status) {
-    let regs = JSON.parse(localStorage.getItem('registrations')) || [];
-    let members = JSON.parse(localStorage.getItem('members')) || [];
-    const idx = regs.findIndex(r => r.id === id);
-    if (idx !== -1) {
-        const req = regs[idx];
-        req.status = status;
-        if (status === 'approved') {
-            members.push({
-                id: Date.now(),
-                name: req.name,
-                ign: req.ign,
-                rank: req.rank,
-                joinDate: new Date().toISOString().split('T')[0],
-                profilePic: req.profilePic || ''
-            });
-            localStorage.setItem('members', JSON.stringify(members));
+// --- AUTHENTICATION LOGIC ---
+const loginBtn = document.getElementById('googleLoginBtn');
+if (loginBtn) {
+    loginBtn.onclick = async () => {
+        const msg = document.getElementById('loginMsg');
+        try {
+            const result = await signInWithPopup(auth, provider);
+            if (ALLOWED_EMAILS.includes(result.user.email.toLowerCase())) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                msg.innerText = "Access Granted! Loading Panel...";
+                msg.className = "mt-6 text-center font-bold text-sm text-green-600";
+                setTimeout(() => window.location.href = 'admin-panel.html', 1000);
+            } else {
+                await signOut(auth);
+                localStorage.removeItem('adminLoggedIn');
+                msg.innerText = "Access Denied: You are not an Admin! 🛑";
+                msg.className = "mt-6 text-center font-bold text-sm text-red-500";
+            }
+        } catch (e) {
+            msg.innerText = "Login Error. Please try again.";
         }
-        localStorage.setItem('registrations', JSON.stringify(regs));
-        await sendEmail(req.email, req.name, status);
-        loadPending();
-        loadMembersAdmin();
-        alert(`${status === 'approved' ? 'Accepted' : 'Rejected'} ${req.name}`);
-    }
-};
-
-function loadMembersAdmin() {
-    const members = JSON.parse(localStorage.getItem('members')) || [];
-    const container = document.getElementById('adminMemberList');
-    if (members.length === 0) {
-        container.innerHTML = '<div class="text-gray-500">No members</div>';
-        return;
-    }
-    container.innerHTML = members.map(m => `
-        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-            <div class="flex items-center gap-2">
-                ${m.profilePic ? `<img src="${m.profilePic}" class="w-8 h-8 rounded-full">` : '<i class="fas fa-user-circle text-2xl text-gray-400"></i>'}
-                <span><strong>${escapeHtml(m.name)}</strong> (${escapeHtml(m.ign)}) - ${escapeHtml(m.rank)}</span>
-            </div>
-            <button onclick="removeMember(${m.id})" class="text-red-500 text-sm"><i class="fas fa-trash"></i> Remove</button>
-        </div>
-    `).join('');
-}
-
-window.removeMember = function(id) {
-    let members = JSON.parse(localStorage.getItem('members')) || [];
-    members = members.filter(m => m.id !== id);
-    localStorage.setItem('members', JSON.stringify(members));
-    loadMembersAdmin();
-};
-
-function loadVideosAdmin() {
-    const videos = JSON.parse(localStorage.getItem('videos')) || [];
-    const container = document.getElementById('videosAdminList');
-    if (videos.length === 0) {
-        container.innerHTML = '<div class="text-gray-500">No videos. Add new.</div>';
-        return;
-    }
-    container.innerHTML = videos.map(v => `
-        <div class="border p-4 rounded-xl bg-white flex flex-wrap gap-4 items-start">
-            <img src="${v.thumb}" class="w-28 h-20 object-cover rounded">
-            <div class="flex-1 grid md:grid-cols-2 gap-2">
-                <input type="text" id="title_${v.id}" value="${escapeHtml(v.title)}" class="form-input text-sm">
-                <input type="text" id="url_${v.id}" value="${v.url}" class="form-input text-sm">
-                <input type="text" id="thumb_${v.id}" value="${v.thumb}" class="form-input text-sm">
-                <input type="text" id="desc_${v.id}" value="${escapeHtml(v.desc || '')}" class="form-input text-sm">
-            </div>
-            <div class="flex gap-2">
-                <button onclick="updateVideo(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm"><i class="fas fa-save"></i> Save</button>
-                <button onclick="deleteVideo(${v.id})" class="bg-red-500 text-white px-3 py-1 rounded-full text-sm"><i class="fas fa-trash"></i> Delete</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-window.updateVideo = function(id) {
-    let videos = JSON.parse(localStorage.getItem('videos')) || [];
-    const idx = videos.findIndex(v => v.id === id);
-    if (idx !== -1) {
-        videos[idx].title = document.getElementById(`title_${id}`).value;
-        videos[idx].url = document.getElementById(`url_${id}`).value;
-        videos[idx].thumb = document.getElementById(`thumb_${id}`).value;
-        videos[idx].desc = document.getElementById(`desc_${id}`).value;
-        localStorage.setItem('videos', JSON.stringify(videos));
-        loadVideosAdmin();
-        if (window.loadVideos) window.loadVideos();
-    }
-};
-
-window.deleteVideo = function(id) {
-    let videos = JSON.parse(localStorage.getItem('videos')) || [];
-    videos = videos.filter(v => v.id !== id);
-    localStorage.setItem('videos', JSON.stringify(videos));
-    loadVideosAdmin();
-    if (window.loadVideos) window.loadVideos();
-};
-
-document.getElementById('addVideoBtn')?.addEventListener('click', () => {
-    let videos = JSON.parse(localStorage.getItem('videos')) || [];
-    videos.push({
-        id: Date.now(),
-        title: 'New Video',
-        url: 'https://youtu.be/example',
-        thumb: 'https://img.youtube.com/vi/example/maxresdefault.jpg',
-        desc: '',
-        date: Date.now()
-    });
-    localStorage.setItem('videos', JSON.stringify(videos));
-    loadVideosAdmin();
-    if (window.loadVideos) window.loadVideos();
-});
-
-function loadSocialAdmin() {
-    const s = JSON.parse(localStorage.getItem('socialLinks'));
-    if (!s) return;
-    document.getElementById('discordAdmin').value = s.discord || '';
-    document.getElementById('instagramAdmin').value = s.instagram || '';
-    document.getElementById('broadcastAdmin').value = s.broadcast || '';
-    document.getElementById('secondChannelAdmin').value = s.secondChannel || '';
-}
-
-document.getElementById('saveSocialBtn')?.addEventListener('click', () => {
-    const newLinks = {
-        discord: document.getElementById('discordAdmin').value,
-        instagram: document.getElementById('instagramAdmin').value,
-        broadcast: document.getElementById('broadcastAdmin').value,
-        secondChannel: document.getElementById('secondChannelAdmin').value,
-        secondChannelImage: 'https://img.sanishtech.com/u/0df2b2128a37e8baf3347bf36198a2e7.jpg'
     };
-    localStorage.setItem('socialLinks', JSON.stringify(newLinks));
-    alert('Social links saved!');
-    if (window.loadSocialLinks) window.loadSocialLinks();
+}
+
+// --- DASHBOARD LOGIC ---
+onAuthStateChanged(auth, (user) => {
+    const isLoginPage = window.location.pathname.includes('admin-login.html');
+    
+    if (!user && !isLoginPage) {
+        window.location.href = 'admin-login.html';
+    } 
+    
+    if (user && !isLoginPage) {
+        if (!ALLOWED_EMAILS.includes(user.email.toLowerCase())) {
+            window.location.href = 'admin-login.html';
+        } else {
+            initAdminPanel();
+        }
+    }
 });
 
-document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    localStorage.removeItem('adminLoggedIn');
-    window.location.href = 'admin-login.html';
-});
+function initAdminPanel() {
+    loadPending();
+    loadSocialAdmin();
+    loadVideosAdmin();
+    loadMembersAdmin();
+    
+    // Logout Event
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            signOut(auth).then(() => {
+                localStorage.removeItem('adminLoggedIn');
+                window.location.href = 'admin-login.html';
+            });
+        };
+    }
+}
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
+// 🟢 1. PENDING REQUESTS
+function loadPending() {
+    const container = document.getElementById('pendingList');
+    if (!container) return;
+
+    onValue(ref(db, 'registrations'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) { container.innerHTML = '<p class="text-gray-400">All clear!</p>'; return; }
+
+        const pending = Object.entries(data)
+            .map(([id, val]) => ({ id, ...val }))
+            .filter(r => r.status === 'pending');
+
+        container.innerHTML = pending.map(req => `
+            <div class="border rounded-xl p-4 bg-gray-50 flex flex-wrap gap-4 items-start">
+                <img src="${req.profilePic || 'icon.png'}" class="w-16 h-16 rounded-full border-2 border-pink-200">
+                <div class="flex-1">
+                    <strong class="text-lg">${req.name}</strong> (${req.ign})<br>
+                    <span class="text-sm text-gray-500">${req.rank}</span>
+                    <div class="mt-2">
+                        ${req.video ? `<video controls class="max-h-32 rounded"><source src="${req.video}"></video>` : ''}
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <button onclick="processReq('${req.id}', 'approved')" class="bg-green-500 text-white px-4 py-2 rounded-lg">Accept</button>
+                    <button onclick="processReq('${req.id}', 'rejected')" class="bg-red-500 text-white px-4 py-2 rounded-lg">Reject</button>
+                </div>
+            </div>
+        `).join('');
     });
 }
 
-// Initial load
-loadPending();
-loadMembersAdmin();
-loadVideosAdmin();
-loadSocialAdmin();
+window.processReq = async (id, status) => {
+    const r = await get(ref(db, `registrations/${id}`));
+    const req = r.val();
+    if (status === 'approved') {
+        await push(ref(db, 'members'), { name: req.name, ign: req.ign, rank: req.rank, profilePic: req.profilePic || '' });
+    }
+    await update(ref(db, `registrations/${id}`), { status });
+    alert("Updated!");
+};
+
+// 🟢 2. SOCIAL LINKS
+function loadSocialAdmin() {
+    onValue(ref(db, 'socialLinks'), (s) => {
+        const data = s.val();
+        if (!data) return;
+        if(document.getElementById('discordAdmin')) document.getElementById('discordAdmin').value = data.discord || '';
+        if(document.getElementById('instagramAdmin')) document.getElementById('instagramAdmin').value = data.instagram || '';
+        if(document.getElementById('broadcastAdmin')) document.getElementById('broadcastAdmin').value = data.broadcast || '';
+        if(document.getElementById('secondChannelAdmin')) document.getElementById('secondChannelAdmin').value = data.secondChannel || '';
+    });
+
+    const saveSocialBtn = document.getElementById('saveSocialBtn');
+    if (saveSocialBtn) {
+        saveSocialBtn.onclick = () => {
+            update(ref(db, 'socialLinks'), {
+                discord: document.getElementById('discordAdmin').value,
+                instagram: document.getElementById('instagramAdmin').value,
+                broadcast: document.getElementById('broadcastAdmin').value,
+                secondChannel: document.getElementById('secondChannelAdmin').value
+            }).then(() => alert("Social Links Synced!"));
+        };
+    }
+}
+
+// 🟢 3. VIDEOS MANAGEMENT
+function loadVideosAdmin() {
+    const list = document.getElementById('videosAdminList');
+    if (!list) return;
+
+    onValue(ref(db, 'videos'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        list.innerHTML = Object.entries(data).map(([id, v]) => `
+            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border">
+                <img src="${v.thumb}" class="w-20 rounded">
+                <div class="flex-1">
+                    <input type="text" id="t_${id}" value="${v.title}" class="w-full mb-1 border rounded px-1">
+                    <input type="text" id="u_${id}" value="${v.url}" class="w-full border rounded px-1 text-xs">
+                </div>
+                <button onclick="syncVid('${id}')" class="text-blue-500"><i class="fas fa-save"></i></button>
+                <button onclick="delVid('${id}')" class="text-red-500"><i class="fas fa-trash"></i></button>
+            </div>
+        `).join('');
+    });
+
+    const addVidBtn = document.getElementById('addVideoBtn');
+    if (addVidBtn) {
+        addVidBtn.onclick = () => {
+            push(ref(db, 'videos'), { title: 'New Video', url: '', thumb: 'icon.png' });
+        };
+    }
+}
+
+window.syncVid = (id) => {
+    update(ref(db, `videos/${id}`), {
+        title: document.getElementById(`t_${id}`).value,
+        url: document.getElementById(`u_${id}`).value
+    });
+};
+
+window.delVid = (id) => remove(ref(db, `videos/${id}`));
+
+// 🟢 4. MEMBERS LIST
+function loadMembersAdmin() {
+    const list = document.getElementById('adminMemberList');
+    if (!list) return;
+
+    onValue(ref(db, 'members'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        list.innerHTML = Object.entries(data).map(([id, m]) => `
+            <div class="flex justify-between p-2 border-b">
+                <span>${m.name} (${m.ign})</span>
+                <button onclick="delMem('${id}')" class="text-red-500 text-xs">Remove</button>
+            </div>
+        `).join('');
+    });
+}
+
+window.delMem = (id) => remove(ref(db, `members/${id}`));
