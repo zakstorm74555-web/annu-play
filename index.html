@@ -3,37 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon: Garena Logo Integrated -->
-<link rel="icon" type="image/jpeg" href="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" />
+    
     <!-- PRIMARY SEO TAGS -->
     <title>Annu Play - Official FreeFire Pro & Content Creator</title>
     <meta name="title" content="Annu Play - Official FreeFire Pro & Content Creator">
     <meta name="description" content="Welcome to the official site of Annu Play. Watch elite FreeFire gameplay, professional tutorials, and join our growing gaming community.">
     <meta name="keywords" content="Annu Play, Annu Play FreeFire, FreeFire Pro, FreeFire Tips and Tricks, Annu Play Live, Gaming Content Creator, Indian FreeFire Gamer">
     <meta name="author" content="Annu Play">
-    <link rel="canonical" href="https://your-domain.com/"> <!-- Aapna real URL yahan daalein -->
+    
+    <!-- VERCEL SUBDOMAIN SEO -->
+    <link rel="canonical" href="https://annuplays.vercel.app/">
 
-    <!-- OPEN GRAPH (Facebook, WhatsApp, Discord) -->
+    <!-- FAVICON: Using Annu Play Official Logo -->
+    <link rel="icon" type="image/jpeg" href="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" />
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- OPEN GRAPH (Social Media Preview) -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-domain.com/">
+    <meta property="og:url" content="https://annuplays.vercel.app/">
     <meta property="og:title" content="Annu Play - FreeFire Pro & Gaming Journey">
     <meta property="og:description" content="Epic FreeFire gameplay, tutorials, and exciting content! Join Annu Play community today.">
     <meta property="og:image" content="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj">
 
     <!-- TWITTER SEO -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://your-domain.com/">
+    <meta property="twitter:url" content="https://annuplays.vercel.app/">
     <meta property="twitter:title" content="Annu Play - FreeFire Pro Content Creator">
     <meta property="twitter:description" content="Watch elite FreeFire gameplay and pro tutorials by Annu Play.">
     <meta property="twitter:image" content="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj">
 
-    <!-- JSON-LD SCHEMA MARKUP (Google ke liye special data) -->
+    <!-- JSON-LD SCHEMA MARKUP -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Annu Play",
-      "url": "https://your-domain.com/",
+      "url": "https://annuplays.vercel.app/",
       "image": "https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj",
       "jobTitle": "Content Creator & Professional Gamer",
       "sameAs": [
@@ -43,26 +48,37 @@
     }
     </script>
 
-    <!-- Styles & Fonts (Aapka original content) -->
+    <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .gradient-text { background: linear-gradient(to right, #ec4899, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes blob { 0% { transform: translate(0px, 0px) scale(1); } 33% { transform: translate(30px, -50px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } 100% { transform: translate(0px, 0px) scale(1); } }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+        .floating { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        .section-title { position: relative; display: inline-block; padding-bottom: 10px; }
+        .section-title::after { content: ''; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 50px; height: 3px; background: #ec4899; border-radius: 2px; }
+    </style>
 </head>
 <body class="bg-pink-50">
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-400 to-pink-600 flex items-center justify-center"><span class="text-white font-bold text-xl">A</span></div>
-                <!-- Main Logo H1 for SEO -->
+                <img src="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" alt="Logo" class="w-10 h-10 rounded-full border-2 border-pink-500">
                 <h1 class="text-2xl font-bold gradient-text">Annu Play</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
-                <a href="#home" class="font-medium hover:text-pink-500">Home</a>
-                <a href="#about" class="font-medium hover:text-pink-500">About</a>
-                <a href="#videos" class="font-medium hover:text-pink-500">Videos</a>
-                <a href="guild-register.html" class="font-medium hover:text-pink-500">Guild Register</a>
-                <a href="admin-login.html" class="font-medium hover:text-pink-500">Admin</a>
+                <a href="#home" class="font-medium hover:text-pink-500 transition">Home</a>
+                <a href="#about" class="font-medium hover:text-pink-500 transition">About</a>
+                <a href="#videos" class="font-medium hover:text-pink-500 transition">Videos</a>
+                <a href="guild-register.html" class="font-medium hover:text-pink-500 transition">Guild Register</a>
+                <a href="admin-login.html" class="font-medium hover:text-pink-500 transition"><i class="fas fa-lock text-xs"></i> Admin</a>
             </nav>
         </div>
     </header>
@@ -77,32 +93,29 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0">
-                    <div class="relative">
+                    <div class="relative flex justify-center md:justify-start">
                         <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl floating">
-                            <!-- Alt text for Image SEO -->
                             <img src="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" alt="Annu Play FreeFire Pro Content Creator" class="w-full h-full object-cover">
                         </div>
-                        <div class="absolute -bottom-4 -right-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2 rounded-full font-bold shadow-lg">Content Creator</div>
+                        <div class="absolute -bottom-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2 rounded-full font-bold shadow-lg">Content Creator</div>
                     </div>
                 </div>
                 <div class="md:w-1/2 md:pl-12 text-center md:text-left">
-                    <!-- Heading hierarchy optimized -->
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4"><span class="gradient-text">Annu Play</span><br><span class="text-gray-700">FreeFire Pro</span></h2>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight"><span class="gradient-text">Annu Play</span><br><span class="text-gray-700">FreeFire Pro</span></h2>
                     <p class="text-lg text-gray-600 mb-8">Join me on my gaming journey with epic FreeFire gameplay, tutorials, and exciting content!</p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://www.youtube.com/@AnnuPlaylive" target="_blank" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg inline-flex items-center justify-center" aria-label="Subscribe to Annu Play on YouTube"><i class="fab fa-youtube mr-2"></i> Subscribe</a>
-                        <a href="#about" class="border-2 border-pink-500 text-pink-500 px-8 py-3 rounded-full font-semibold hover:bg-pink-500 hover:text-white">Learn More About Annu</a>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="https://www.youtube.com/@AnnuPlaylive" target="_blank" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg inline-flex items-center justify-center transition hover:scale-105" aria-label="Subscribe to Annu Play on YouTube"><i class="fab fa-youtube mr-2"></i> Subscribe</a>
+                        <a href="#about" class="border-2 border-pink-500 text-pink-500 px-8 py-3 rounded-full font-semibold hover:bg-pink-500 hover:text-white transition">Learn More</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Semantic 'article' used for About section -->
     <section id="about" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16 section-title">About Annu Play</h2>
-            <article class="max-w-4xl mx-auto">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-16 section-title">About Annu Play</h2>
+            <article class="max-w-4xl mx-auto text-left">
                 <div class="profile-card bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-lg">
                     <div class="flex flex-col md:flex-row items-center">
                         <div class="mb-6 md:mb-0 md:mr-8">
@@ -110,14 +123,14 @@
                                 <img src="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" alt="Annu Play Profile" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="text-center md:text-left">
-                            <h3 class="text-2xl font-bold text-gray-800">Annu Play Portfolio</h3>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-1">Annu Play Portfolio</h3>
                             <p class="text-pink-500 font-semibold mb-4">Content Creator & FreeFire Pro</p>
                             <p class="text-gray-600 mb-4">Hi! I'm Annu, a passionate FreeFire content creator. I share advanced gaming tutorials, strategic gameplay, and build a strong community for FreeFire lovers.</p>
-                            <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                                <div class="bg-pink-100 px-4 py-2 rounded-full text-pink-700"><i class="fas fa-gamepad mr-2"></i> FreeFire</div>
-                                <div class="bg-purple-100 px-4 py-2 rounded-full text-purple-700"><i class="fas fa-video mr-2"></i> Content Creator</div>
-                                <div class="bg-pink-100 px-4 py-2 rounded-full text-pink-700"><i class="fas fa-users mr-2"></i> Community</div>
+                            <div class="flex flex-wrap gap-4">
+                                <div class="bg-pink-100 px-4 py-2 rounded-full text-pink-700 text-sm font-medium"><i class="fas fa-gamepad mr-2"></i> FreeFire</div>
+                                <div class="bg-purple-100 px-4 py-2 rounded-full text-purple-700 text-sm font-medium"><i class="fas fa-video mr-2"></i> Content Creator</div>
+                                <div class="bg-pink-100 px-4 py-2 rounded-full text-pink-700 text-sm font-medium"><i class="fas fa-users mr-2"></i> Community</div>
                             </div>
                         </div>
                     </div>
@@ -126,23 +139,28 @@
         </div>
     </section>
 
-    <!-- Social Links Section -->
+    <!-- Social Links (Loaded Realtime via main.js) -->
     <section class="py-16 bg-white" id="socialSection">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16 section-title">Follow Annu Play Social Media</h2>
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-16 section-title">Follow Social Media</h2>
             <div id="socialLinksContainer" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
     </section>
 
-    <!-- Videos Section -->
+    <!-- Latest Videos (Loaded Realtime via main.js) -->
     <section id="videos" class="py-16 bg-gradient-to-br from-pink-50 to-purple-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16 section-title">Annu Play Latest Gameplay Videos</h2>
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-16 section-title">Latest Gameplay Videos</h2>
             <div id="videosContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </div>
     </section>
 
+    <footer class="py-8 bg-white border-t border-gray-100 text-center">
+        <p class="text-gray-400 text-sm">&copy; 2026 Annu Play. Optimized for <a href="https://annuplays.vercel.app/" class="hover:text-pink-500 transition">annuplays.vercel.app</a></p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="js/main.js"></script>
+    <!-- Zaroori: Script type module rakhein kyunki main.js mein firebase imports hain -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
