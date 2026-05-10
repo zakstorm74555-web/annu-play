@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Admin aur private sections ko hide karne ke liye
+Disallow: /admin
+Disallow: /config
+Disallow: /login
+
+# Sitemap ka rasta (Agar aapke paas sitemap.xml hai)
+Sitemap: https://annuplays.vercel.app/sitemap.xml
