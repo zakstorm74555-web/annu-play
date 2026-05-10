@@ -4,27 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- PRIMARY SEO TAGS -->
     <title>Guild Registration | Join Annu Play FreeFire Team</title>
     <meta name="title" content="Guild Registration | Join Annu Play FreeFire Team">
-    <meta name="description" content="Apply now to join the official Annu Play FreeFire Guild. Submit your IGN, rank, and gameplay video to become part of our elite gaming community.">
+    <meta name="description" content="Apply now to join the official Annu Play FreeFire Guild. Submit your IGN, rank, and social links to become part of our elite gaming community.">
     <meta name="keywords" content="Annu Play Guild, FreeFire Guild Join, Annu Play Team Register, FreeFire Pro Guild, Annu Play Gaming Community">
     <meta name="author" content="Annu Play">
 
-    <!-- FAVICON & LOGO -->
     <link rel="icon" type="image/jpeg" href="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj" />
     <link rel="apple-touch-icon" href="icon.png">
 
-    <!-- OPEN GRAPH -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Join Annu Play FreeFire Guild - Register Now!">
     <meta property="og:description" content="Showcase your FreeFire skills and join Annu Play's official guild. Fill the registration form now.">
     <meta property="og:image" content="https://yt3.googleusercontent.com/iP1jExWSiVSIFe5RQ4BFvy7_c8s-mhjtEMTz0IIe4k47skzaFInyEFhxGV_fYuSwUrRliWSpWw=s900-c-k-c0x00ffffff-no-rj">
 
-    <!-- Tailwind & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
 
     <style>
         .gradient-text { background: linear-gradient(to right, #ec4899, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -52,7 +47,6 @@
     </header>
 
     <div class="container mx-auto px-4 py-12 max-w-3xl">
-        <!-- Registration Form -->
         <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition hover:scale-[1.01]">
             <h2 class="text-3xl font-bold text-center gradient-text mb-2">Guild Registration</h2>
             <p class="text-center text-gray-500 mb-8 font-medium">Join the elite Annu Play FreeFire family</p>
@@ -61,7 +55,7 @@
                 <div class="grid md:grid-cols-2 gap-4">
                     <input type="text" id="name" name="full_name" placeholder="Full Name *" class="form-input" required>
                     <input type="email" id="email" name="email" placeholder="Email Address *" class="form-input" required>
-                    <input type="text" id="ign" name="ign" placeholder="FreeFire IGN *" class="form-input" required>
+                    <input type="text" id="ign" name="ign" placeholder="FreeFire UID *" class="form-input" required>
                     <select id="rank" name="rank" class="form-input" required>
                         <option value="" disabled selected>Select Your Rank</option>
                         <option>Bronze</option>
@@ -72,14 +66,18 @@
                         <option>Grandmaster</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block font-semibold mb-1 text-gray-700 text-sm">Profile Picture (Max 2MB)</label>
-                    <input type="file" id="profilePic" accept="image/*" class="form-input text-sm">
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 text-sm">YouTube Channel Link (Optional)</label>
+                        <input type="url" id="ytChannel" name="yt_channel" placeholder="https://youtube.com/@yourchannel" class="form-input">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 text-sm">YouTube Gameplay Video Link (Optional)</label>
+                        <input type="url" id="ytVideo" name="yt_video" placeholder="https://youtu.be/example" class="form-input">
+                    </div>
                 </div>
-                <div>
-                    <label class="block font-semibold mb-1 text-gray-700 text-sm">Gameplay Clip (MP4, Max 10MB)</label>
-                    <input type="file" id="videoFile" accept="video/mp4" class="form-input text-sm">
-                </div>
+
                 <div>
                     <textarea id="message" name="reason" rows="3" placeholder="Why do you want to join Annu Play Guild?" class="form-input"></textarea>
                 </div>
@@ -90,7 +88,6 @@
             <div id="formMsg" class="mt-4 text-center font-semibold text-sm"></div>
         </div>
 
-        <!-- Application Status Check -->
         <div class="mt-10 bg-white rounded-2xl shadow-xl p-6 max-w-md mx-auto border-t-4 border-pink-400">
             <h3 class="text-xl font-bold text-center gradient-text">Check Application Status</h3>
             <p class="text-xs text-center text-gray-400 mb-4">Enter the email you used for registration</p>
@@ -104,7 +101,6 @@
         </div>
     </div>
 
-    <!-- Firebase Integration Hub -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
