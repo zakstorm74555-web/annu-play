@@ -22,7 +22,7 @@ function escapeHtml(str) {
     return str.replace(/[&<>]/g, m => ({'&':'&','<':'<','>':'>'}[m]));
 }
 
-// ===== HOME PAGE: Realtime Videos (Updated to receive Thumbnail) =====
+// ===== HOME PAGE: Realtime Videos =====
 function loadVideos() {
     const container = document.getElementById('videosContainer');
     if (!container) return;
@@ -34,7 +34,6 @@ function loadVideos() {
             return;
         }
 
-        // Convert object to array and sort by latest
         const vList = Object.values(data).sort((a, b) => b.timestamp - a.timestamp).slice(0, 3);
         
         container.innerHTML = vList.map(v => `
@@ -92,19 +91,6 @@ function loadSocialLinks() {
     });
 }
 
-// ===== FILE HELPER =====
-function readFileAsDataURL(file, maxSizeMB) {
-    return new Promise((resolve, reject) => {
-        if (file.size > maxSizeMB * 1024 * 1024) {
-            reject(new Error(`File size exceeds ${maxSizeMB}MB`));
-            return;
-        }
-        const fr = new FileReader();
-        fr.onload = () => resolve(fr.result);
-        fr.readAsDataURL(file);
-    });
-}
-
 // ===== GUILD REGISTRATION (Push to Firebase) =====
 const regForm = document.getElementById('registerForm');
 if (regForm) {
@@ -122,14 +108,10 @@ if (regForm) {
             const ign = document.getElementById('ign').value.trim();
             const rank = document.getElementById('rank').value;
             const message = document.getElementById('message').value.trim();
-
-            let profilePic = '';
-            const picFile = document.getElementById('profilePic').files[0];
-            if (picFile) profilePic = await readFileAsDataURL(picFile, 2);
-
-            let video = '';
-            const vidFile = document.getElementById('videoFile').files[0];
-            if (vidFile) video = await readFileAsDataURL(vidFile, 10);
+            
+            // Getting YouTube links instead of files
+            const ytChannel = document.getElementById('ytChannel').value.trim();
+            const ytVideo = document.getElementById('ytVideo').value.trim();
 
             // Push to Firebase registrations node
             await push(ref(db, 'registrations'), {
@@ -138,8 +120,8 @@ if (regForm) {
                 ign,
                 rank,
                 message,
-                profilePic,
-                video,
+                youtubeChannel: ytChannel, // Text URL
+                gameplayLink: ytVideo,      // Text URL
                 status: 'pending',
                 submittedAt: Date.now()
             });
@@ -150,7 +132,7 @@ if (regForm) {
             formMsg.innerHTML = `<span class="text-red-500">❌ Error: ${error.message}</span>`;
         } finally {
             btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Submit Registration';
+            btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Submit Application';
         }
     });
 }
@@ -165,23 +147,27 @@ if (checkBtn) {
 
         resDiv.innerHTML = 'Searching...';
 
-        const snapshot = await get(ref(db, 'registrations'));
-        if (snapshot.exists()) {
-            const regs = Object.values(snapshot.val());
-            const found = regs.find(r => r.email === email);
-            
-            if (!found) {
-                resDiv.innerHTML = '<span class="text-red-500">No application found with this email.</span>';
+        try {
+            const snapshot = await get(ref(db, 'registrations'));
+            if (snapshot.exists()) {
+                const regs = Object.values(snapshot.val());
+                const found = regs.find(r => r.email === email);
+                
+                if (!found) {
+                    resDiv.innerHTML = '<span class="text-red-500">No application found with this email.</span>';
+                } else {
+                    const statusMap = {
+                        'pending': '<span class="text-yellow-600">⏳ Status: PENDING (Under Review)</span>',
+                        'approved': '<span class="text-green-600">✅ Status: APPROVED! Welcome to the Guild.</span>',
+                        'rejected': '<span class="text-red-600">❌ Status: REJECTED (Better luck next time)</span>'
+                    };
+                    resDiv.innerHTML = statusMap[found.status] || 'Unknown';
+                }
             } else {
-                const statusMap = {
-                    'pending': '<span class="text-yellow-600">⏳ Status: PENDING (Under Review)</span>',
-                    'approved': '<span class="text-green-600">✅ Status: APPROVED! Welcome to the Guild.</span>',
-                    'rejected': '<span class="text-red-600">❌ Status: REJECTED (Better luck next time)</span>'
-                };
-                resDiv.innerHTML = statusMap[found.status] || 'Unknown';
+                resDiv.innerHTML = '<span class="text-red-500">No data found.</span>';
             }
-        } else {
-            resDiv.innerHTML = '<span class="text-red-500">No data found.</span>';
+        } catch (err) {
+            resDiv.innerHTML = '<span class="text-red-500">Error fetching status.</span>';
         }
     });
 }
